@@ -2,6 +2,7 @@ package com.example.dekanat.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import com.example.dekanat.model.AppUser;
 
 @Entity
 @Table(name = "tickets")
@@ -30,6 +31,10 @@ public class Ticket {
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn (name = "user_id")
+    private AppUser user;
 
     public Ticket() {
     }
@@ -85,4 +90,8 @@ public class Ticket {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    public AppUser getUser() { return  user; }
+
+    public void setUser(AppUser user) { this.user = user; }
 }

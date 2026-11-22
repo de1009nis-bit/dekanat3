@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Деканат — Электронная очередь</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="navbar-content">
+        <div class="logo">ВозьмиТалон</div>
+        <div class="nav-description">Деканат</div>
+    </div>
+</header>
+
+<div th:if="${successMessage}"
+     class="success-message"
+     th:text="${successMessage}">
+</div>
+
+<div th:if="${errorMessage}"
+     class="error-message"
+     th:text="${errorMessage}">
+</div>
+
+<section class="card stats-card">
+    <div class="stats-title">Ожидают обслуживания</div>
+    <div class="stats-number" th:text="${waitingCount}">0</div>
+    <div class="stats-description">
+        Талонов со статусом «Ожидает»
+    </div>
+</section>
+
+<section class="card">
+
+    <div class="tickets-header">
+        <h2 class="card-title">Очередь студентов</h2>
+
+        <span class="ticket-count"
+              th:text="${#lists.size(tickets)}">0</span>
+    </div>
+
+    <div th:if="${#lists.isEmpty(tickets)}"
+         class="empty-state">
+        <h3>Очередь пуста</h3>
+        <p>Пока нет созданных талонов.</p>
+    </div>
+
+    <div th:unless="${#lists.isEmpty(tickets)}">
+
+        <table class="ticket-table">
+            <thead>
+            <tr>
+                <th>Номер</th>
+                <th>Студент</th>
+                <th>Категория</th>
+                <th>Статус</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="ticket : ${tickets}">
+
+                <td>
+                    <span class="ticket-number"
+                          th:text="${ticket.ticketNumber}">
+                    </span>
+
+                    <span th:if="${ticket.urgent}"
+                          class="urgent-badge">★</span>
+                </td>
+
+                <td th:text="${ticket.studentName}"></td>
+
+                <td th:text="${ticket.category.label}"></td>
+
+                <td>
+                    <span class="status"
+                          th:text="${ticket.status.label}">
+                    </span>
+                </td>
+
+                <td>
+
+                    <form th:if="${ticket.status.name() == 'WAITING'}"
+                          th:action="@{/dekanat/tickets/{id}/status(id=${ticket.id})}"
+                          method="post">
+                        <input type="hidden"
+                               name="status"
+                               value="CALLED">
+                        <button type="submit" class="submit-button">
+                            Вызвать
+                        </button>
+                    </form>
+
+                    <form th:if="${ticket.status.name() == 'CALLED'}"
+                          th:action="@{/dekanat/tickets/{id}/status(id=${ticket.id})}"
+                          method="post">
+                        <input type="hidden"
+                               name="status"
+                               value="IN_SERVICE">
+                        <button type="submit" class="submit-button">
+                            Начать обслуживание
+                        </button>
+                    </form>
+
+                    <form th:if="${ticket.status.name() == 'IN_SERVICE'}"
+                          th:action="@{/dekanat/tickets/{id}/status(id=${ticket.id})}"
+                          method="post">
+                        <input type="hidden"
+                               name="status"
+                               value="COMPLETED">
+                        <button type="submit" class="submit-button">
+                            Завершить
+                        </button>
+                    </form>
+
+                    <form th:if="${ticket.status.name() == 'WAITING'
+                                  or ticket.status.name() == 'CALLED'
+                                  or ticket.status.name() == 'IN_SERVICE'}"
+                          th:action="@{/dekanat/tickets/{id}/status(id=${ticket.id})}"
+                          method="post">
+                        <input type="hidden"
+                               name="status"
+                               value="CANCELLED">
+                        <button type="submit">
+                            Отменить
+                        </button>
+                    </form>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</section>
+
+<p>
+    <a th:href="@{/}">Вернуться на страницу студентов</a>
+</p>
+</body>
+</html>

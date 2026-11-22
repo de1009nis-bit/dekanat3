@@ -11,22 +11,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.example.dekanat.repository.UserRepository;
+import org.springframework.security.core.Authentication;
 
 @Controller
 public class TicketController {
 
     private final TicketService ticketService;
+    private final UserRepository userRepository;
 
-    public TicketController(TicketService ticketService) {
+    public TicketController(TicketService ticketService, UserRepository userRepository) {
         this.ticketService = ticketService;
+        this.userRepository = userRepository;
+    }
+
+    @ModelAttribute
+    public void addCommonAttributes(Model model) {
+        if (!model.containsAttribute("ticketForm")) {
+            model.addAttribute("ticketForm", new TicketForm());
+        }
+
+        model.addAttribute("categories", TicketCategory.values());
     }
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("ticketForm", new TicketForm());
-        model.addAttribute("categories", TicketCategory.values());
         model.addAttribute("tickets", ticketService.getAllTickets());
         model.addAttribute("waitingCount", ticketService.getWaitingCount());
+        model.addAttribute("waitingTimes", ticketService.getWaitingTimes(ticketService.getAllTickets()));
 
         return "index";
     }
@@ -36,17 +48,20 @@ public class TicketController {
             @Valid @ModelAttribute("ticketForm") TicketForm form,
             BindingResult bindingResult,
             Model model,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            Authentication authentication
     ) {
+
         if (bindingResult.hasErrors()) {
-            model.addAttribute("categories", TicketCategory.values());
             model.addAttribute("tickets", ticketService.getAllTickets());
             model.addAttribute("waitingCount", ticketService.getWaitingCount());
 
             return "index";
         }
 
-        var ticket = ticketService.createTicket(form);
+        var user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new IllegalArgumentException("Пользователь не найден"));
+
+        var ticket = ticketService.createTicket(form, user);
 
         redirectAttributes.addFlashAttribute(
                 "successMessage",

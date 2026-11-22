@@ -1,0 +1,410 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eeeade;
+    color: #211e1e;
+}
+
+/* ===== Верхняя панель ===== */
+.navbar {
+    height: 56px;
+    background: #382626;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-content {
+    width: 100%;
+    max-width: 1040px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px;
+}
+
+.logo {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.nav-description {
+    font-size: 14px;
+}
+
+.nav-button {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 7px 14px;
+    border: none;
+    border-radius: 4px;
+    background: #08764e;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: inherit;
+}
+
+.nav-button:hover {
+    background: #065c3d;
+}
+
+/* ===== Основной контейнер ===== */
+.container {
+    max-width: 1040px;
+    margin: 38px auto;
+    padding: 0 12px;
+}
+
+.page-title {
+    color: #08764e;
+    font-size: 32px;
+    margin: 0 0 8px;
+}
+
+.page-subtitle {
+    color: #858585;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+/* ===== Карточки ===== */
+.card {
+    background: #fff;
+    border: 1px solid #c9c9c9;
+    padding: 16px;
+}
+
+.stats-card {
+    width: 336px;
+    min-height: 117px;
+    margin-bottom: 18px;
+}
+
+.stats-title {
+    color: #858585;
+    font-size: 13px;
+}
+
+.stats-number {
+    font-size: 27px;
+    font-weight: bold;
+    margin: 7px 0;
+}
+
+.stats-description {
+    color: #777;
+    font-size: 12px;
+}
+
+/* ===== Рабочая область ===== */
+.dashboard {
+    display: grid;
+    grid-template-columns: 336px 1fr;
+    gap: 18px;
+    align-items: start;
+}
+
+.card-title {
+    font-size: 19px;
+    margin: 3px 0 20px;
+}
+
+/* ===== Форма ===== */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.form-control {
+    width: 100%;
+    height: 34px;
+    padding: 7px 10px;
+    border: 1px solid #d0d0d0;
+    background: white;
+    font-size: 13px;
+    color: #333;
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: #08764e;
+    box-shadow: 0 0 0 2px rgba(8, 118, 78, 0.12);
+}
+
+.urgent-label {
+    display: flex !important;
+    align-items: center;
+    gap: 7px;
+    font-weight: normal !important;
+    cursor: pointer;
+    margin: 17px 0;
+}
+
+.urgent-label input {
+    accent-color: #08764e;
+}
+
+/* ===== Кнопка ===== */
+.submit-button {
+    width: 100%;
+    height: 34px;
+    background: #08764e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+    font-family: inherit;
+}
+
+.submit-button:hover {
+    background: #065c3d;
+}
+
+/* ===== Список талонов ===== */
+.tickets-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ticket-count {
+    background: #08764e;
+    color: white;
+    padding: 4px 8px;
+    font-size: 13px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 38px 10px;
+    color: #888;
+}
+
+.empty-state h3 {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    font-size: 13px;
+}
+
+/* ===== Таблица ===== */
+.ticket-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.ticket-table th {
+    text-align: left;
+    color: #777;
+    background: #f7f7f7;
+    padding: 11px 8px;
+}
+
+.ticket-table td {
+    padding: 12px 8px;
+    border-top: 1px solid #eee;
+}
+
+.ticket-number {
+    color: #08764e;
+    font-weight: bold;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 8px;
+    background: #edf3ef;
+    color: #08764e;
+    font-size: 12px;
+}
+
+.urgent-badge {
+    color: #b33b32;
+    font-weight: bold;
+}
+
+.success-message {
+    padding: 12px;
+    margin-bottom: 16px;
+    background: #e1f2e7;
+    color: #176b3e;
+    font-size: 14px;
+}
+
+.error-message {
+    color: #b33b32;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.auth-card {
+    max-width: 420px;
+    margin: 0 auto;              /* карточка по центру */
+}
+
+.auth-footer {
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+    margin: 18px 0 0;
+}
+
+.auth-back {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 13px;
+}
+
+.auth-link {
+    color: #08764e;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.auth-link:hover {
+    color: #065c3d;
+    text-decoration: underline;
+}
+
+.auth-alert {
+    max-width: 420px;
+    margin: 0 auto 16px;
+    text-align: center;
+    padding: 12px;
+}
+
+.auth-alert.success-message {
+    background: #e1f2e7;
+    color: #176b3e;
+    font-size: 14px;
+}
+
+.auth-alert.error-message {
+    background: #fbe6e4;
+    color: #b33b32;
+    font-size: 14px;
+    margin-top: 0;
+}
+
+/* ===== Правый блок в навбаре (ссылки/кнопки) ===== */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.nav-form {
+    margin: 0;
+    display: inline-flex;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+
+.nav-link:hover {
+    opacity: 0.75;
+}
+
+.nav-button {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 7px 14px;
+    border: none;
+    border-radius: 4px;
+    background: #08764e;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: inherit;
+}
+
+.nav-button:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.7);
+    opacity: 1;
+}
+
+.current-ticket-card {
+    margin-bottom: 18px;
+}
+
+.current-ticket-number-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.current-ticket-number {
+    font-size: 34px;
+    font-weight: bold;
+    color: #08764e;
+    letter-spacing: 1px;
+}
+
+.ticket-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px 24px;
+}
+
+.ticket-meta-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.ticket-meta-label {
+    font-size: 12px;
+    color: #858585;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ticket-meta-value {
+    font-size: 15px;
+    color: #211e1e;
+    font-weight: 600;
+}
+
+.submit-button.inline-button {
+    display: inline-block;
+    width: auto;
+    padding: 0 20px;
+    margin-top: 14px;
+    line-height: 34px;
+    text-decoration: none;
+}
+
+.history-card .tickets-header {
+    margin-bottom: 16px;
+}
+
+.history-card .card-title {
+    margin-bottom: 0;
+}
