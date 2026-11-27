@@ -65,7 +65,7 @@ public class TicketController {
         }
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("tickets", ticketService.getAllTickets());
+            model.addAttribute("tickets", ticketService.getAllTicketsSorted());
             model.addAttribute("waitingCount", ticketService.getWaitingCount());
 
             return "index";

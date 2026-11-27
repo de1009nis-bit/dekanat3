@@ -161,6 +161,17 @@
                             </button>
                         </form>
 
+                        <form th:if="${ticket.status.name() == 'COMPLETED'
+              or ticket.status.name() == 'CANCELLED'}"
+                              th:action="@{/dekanat/tickets/{id}/delete(id=${ticket.id})}"
+                              method="post"
+                              class="action-form"
+                              onsubmit="return confirm('Удалить талон безвозвратно?');">
+                            <button type="submit"
+                                    class="button-inline button-danger">
+                                Удалить
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>

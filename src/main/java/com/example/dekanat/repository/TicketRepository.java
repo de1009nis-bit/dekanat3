@@ -19,4 +19,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     long countByStatus(TicketStatus status);
 
+    void deleteById(Long id);
+
 }

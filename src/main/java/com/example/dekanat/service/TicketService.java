@@ -12,6 +12,7 @@ import com.example.dekanat.model.TicketCategory;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.Comparator;
 
 @Service
 public class TicketService {
@@ -43,9 +44,24 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
-    public List<Ticket> getAllTickets() {
-        return ticketRepository.findAllByOrderByCreatedAtAsc();
-    }
+//    public List<Ticket> getAllTickets() {
+//        return ticketRepository.findAllByOrderByCreatedAtAsc();
+//    }
+public List<Ticket> getAllTicketsSorted() {
+    List<TicketStatus> order = List.of(
+            TicketStatus.IN_SERVICE,
+            TicketStatus.CALLED,
+            TicketStatus.WAITING,
+            TicketStatus.COMPLETED,
+            TicketStatus.CANCELLED
+    );
+
+    return ticketRepository.findAll().stream()
+            .sorted(Comparator
+                    .comparingInt((Ticket t) -> order.indexOf(t.getStatus()))
+                    .thenComparing(Ticket::getCreatedAt))
+            .toList();
+}
 
     public List<Ticket> getStudentTickets(AppUser user) {
         return ticketRepository.findAllByUserOrderByCreatedAtDesc(user);
@@ -134,5 +150,18 @@ public class TicketService {
 
         ticket.setStatus(newStatus);
         ticketRepository.save(ticket);
+    }
+
+    public void deleteTicket(Long id) {
+        Ticket ticket = ticketRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Талон не найден"));
+
+        if (ticket.getStatus() != TicketStatus.COMPLETED
+                && ticket.getStatus() != TicketStatus.CANCELLED) {
+            throw new IllegalArgumentException(
+                    "Нельзя удалить активный талон. Сначала завершите или отмените его.");
+        }
+
+        ticketRepository.delete(ticket);
     }
 }

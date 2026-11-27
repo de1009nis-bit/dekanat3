@@ -22,8 +22,7 @@ public class DekanatController {
     @GetMapping("/dekanat")
     public String dekanatPage(Model model) {
 
-        model.addAttribute("tickets",
-                ticketService.getAllTickets());
+        model.addAttribute("tickets", ticketService.getAllTicketsSorted());
 
         model.addAttribute("waitingCount",
                 ticketService.getWaitingCount());
@@ -55,6 +54,27 @@ public class DekanatController {
 
         } catch (IllegalArgumentException e) {
 
+            redirectAttributes.addFlashAttribute(
+                    "errorMessage",
+                    e.getMessage()
+            );
+        }
+
+        return "redirect:/dekanat";
+    }
+
+    @PostMapping("/dekanat/tickets/{id}/delete")
+    public String deleteTicket(
+            @PathVariable Long id,
+            RedirectAttributes redirectAttributes
+    ) {
+        try {
+            ticketService.deleteTicket(id);
+            redirectAttributes.addFlashAttribute(
+                    "successMessage",
+                    "Талон успешно удалён."
+            );
+        } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute(
                     "errorMessage",
                     e.getMessage()
