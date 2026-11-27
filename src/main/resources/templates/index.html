@@ -44,8 +44,12 @@
 
     <div th:if="${successMessage}" class="success-message"
          th:text="${successMessage}"></div>
+    <div th:if="${accessDeniedMessage}">
+            <script th:inline="javascript">
+                alert(/*[[${accessDeniedMessage}]]*/ '');
+            </script>
+    </div>
 
-    <!-- Статистика -->
     <section class="card stats-card">
         <div class="stats-title">Ожидают обслуживания</div>
 
@@ -56,10 +60,8 @@
         </div>
     </section>
 
-    <!-- Основная область -->
     <div class="dashboard">
 
-        <!-- Создание талона -->
         <section class="card">
             <h2 class="card-title">Новый талон</h2>
 
@@ -143,7 +145,7 @@
                         <th>Студент</th>
                         <th>Категория</th>
                         <th>Статус</th>
-                        <th>Ожидание</th>>
+                        <th>Ожидание</th>
                     </tr>
                     </thead>
 

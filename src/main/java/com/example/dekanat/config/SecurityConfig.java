@@ -20,18 +20,19 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/css/**", "/login", "/register").permitAll()
                         .requestMatchers("/dekanat").hasRole("DEKANAT")
-                        .requestMatchers("/tickets", "/student/**").hasRole("STUDENT")
+                        .requestMatchers( "/student/**").hasRole("STUDENT")
+                        .requestMatchers( "/tickets").authenticated()
                         .anyRequest().authenticated()
                 )
 
                 .formLogin(form -> form
                         .loginPage("/login")
                         .successHandler((request, response, authentication) -> {
-                            boolean employee = authentication.getAuthorities()
+                            boolean dekanat = authentication.getAuthorities()
                                     .stream()
                                     .anyMatch(a -> a.getAuthority().equals("ROLE_DEKANAT"));
 
-                            response.sendRedirect(employee ? "/dekanat" : "/");
+                            response.sendRedirect(dekanat ? "/dekanat" : "/");
                         })
                         .permitAll()
                 )

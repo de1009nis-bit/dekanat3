@@ -408,3 +408,76 @@ body {
 .history-card .card-title {
     margin-bottom: 0;
 }
+
+/*Таблица*/
+.actions-cell {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.action-form {
+    margin: 0;
+    display: inline-flex;
+}
+
+.button-inline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    padding: 0 12px;
+    font-size: 12px;
+    font-family: inherit;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+}
+
+.button-primary {
+    background: #08764e;
+    color: white;
+    border-radius: 4px;
+}
+
+.button-primary:hover {
+    background: #065c3d;
+}
+
+.button-secondary {
+    background: transparent;
+    color: #08764e;
+    border: 1px solid #08764e;
+    border-radius: 4px;
+}
+
+.button-secondary:hover {
+    background: #08764e;
+    color: white;
+}
+
+.page-actions {
+    margin: 24px 0 40px;
+    text-align: center;
+}
+
+.page-actions .button-inline {
+    height: 36px;
+    padding: 0 18px;
+    font-size: 13px;
+}
+
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.stats-row .stats-card {
+    width: auto;
+    margin-bottom: 0;
+}

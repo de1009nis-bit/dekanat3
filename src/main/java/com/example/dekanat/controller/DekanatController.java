@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller public class DekanatController {
+@Controller
+public class DekanatController {
+
     private final TicketService ticketService;
 
     public DekanatController(TicketService ticketService) {
@@ -26,7 +28,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
         model.addAttribute("waitingCount",
                 ticketService.getWaitingCount());
 
-        return "/dekanat";
+        model.addAttribute("inServiceCount",
+                ticketService.getCountByStatus(TicketStatus.CALLED)
+                        + ticketService.getCountByStatus(TicketStatus.IN_SERVICE));
+
+        model.addAttribute("completedCount",
+                ticketService.getCountByStatus(TicketStatus.COMPLETED));
+
+        return "dekanat";
     }
 
     @PostMapping("/dekanat/tickets/{id}/status")

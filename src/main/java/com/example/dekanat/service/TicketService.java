@@ -7,7 +7,7 @@ import com.example.dekanat.repository.TicketRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import com.example.dekanat.model.AppUser;
-import  com.example.dekanat.model.TicketCategory;
+import com.example.dekanat.model.TicketCategory;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -66,6 +66,10 @@ public class TicketService {
         return ticketRepository.countByStatus(TicketStatus.WAITING);
     }
 
+    public long getCountByStatus(TicketStatus status) {
+        return ticketRepository.countByStatus(status);
+    }
+
     public long getWaitingTime(String ticketNumber) {
         List<Ticket> waitingTickets =
                 ticketRepository.findAllByStatusOrderByCreatedAtAsc(
@@ -94,6 +98,13 @@ public class TicketService {
         }
         return times;
     }
+
+    public List<Ticket> getActiveTickets() {
+        return ticketRepository.findByStatusInOrderByCreatedAtAsc(
+                List.of(TicketStatus.WAITING, TicketStatus.CALLED, TicketStatus.IN_SERVICE)
+        );
+    }
+
     @Transactional
     public void updateStatus(Long ticketId, TicketStatus newStatus) {
         Ticket ticket = ticketRepository.findById(ticketId)

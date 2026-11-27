@@ -36,9 +36,11 @@ public class TicketController {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("tickets", ticketService.getAllTickets());
+        var activeTickets = ticketService.getActiveTickets();
+
+        model.addAttribute("tickets", activeTickets);
         model.addAttribute("waitingCount", ticketService.getWaitingCount());
-        model.addAttribute("waitingTimes", ticketService.getWaitingTimes(ticketService.getAllTickets()));
+        model.addAttribute("waitingTimes", ticketService.getWaitingTimes(activeTickets));
 
         return "index";
     }
@@ -51,6 +53,16 @@ public class TicketController {
             RedirectAttributes redirectAttributes,
             Authentication authentication
     ) {
+        boolean isStudent = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_STUDENT"));
+
+        if (!isStudent) {
+            redirectAttributes.addFlashAttribute(
+                    "accessDeniedMessage",
+                    "Сотрудник не может получить талон студента"
+            );
+            return "redirect:/";
+        }
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("tickets", ticketService.getAllTickets());
