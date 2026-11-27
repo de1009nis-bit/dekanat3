@@ -40,6 +40,10 @@ public class StudentController {
                 ticketService.getStudentTickets(user));
         model.addAttribute("currentTicket", currentTicket);
 
+        boolean isCalled = currentTicket != null
+                && currentTicket.getStatus() == TicketStatus.CALLED;
+        model.addAttribute("isCalled", isCalled);
+
         if (currentTicket != null
                 && currentTicket.getStatus() == TicketStatus.WAITING) {
             model.addAttribute("waitingTime",

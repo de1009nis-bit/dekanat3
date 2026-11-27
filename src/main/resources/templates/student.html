@@ -28,6 +28,12 @@
 <main class="container">
 
     <h1 class="page-title">Личный кабинет</h1>
+    <div th:if="${isCalled}" class="call-banner">
+        <div>
+            <strong>Вас вызвали!</strong><br>
+            Пожалуйста, подойдите к окну деканата.
+        </div>
+    </div>
     <p class="page-subtitle">
         Добро пожаловать,
         <strong th:text="${username}">студент</strong>!
